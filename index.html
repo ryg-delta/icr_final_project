@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Static Website</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div id="landingPage" class="page active">
+        <h1>Welcome to My Site</h1>
+        <p>Click anywhere or press any key to start</p>
+    </div>
+
+    <div id="animatedPage" class="page">
+        <h2>Animated Page</h2>
+    </div>
+
+    <div id="menuPage" class="page">
+        <h2>Menu</h2>
+        <button onclick="navigateTo('option1')">Option 1</button>
+        <button onclick="navigateTo('option2')">Option 2</button>
+        <button onclick="navigateTo('option3')">Option 3</button>
+        <button id="finalPageButton" class="hidden" onclick="navigateTo('finalPage')">Go to Final Page</button>
+    </div>
+
+    <div id="option1Page" class="page">
+        <h2>Option 1</h2>
+        <p>Content for option 1...</p>
+        <button onclick="returnToMenu()">Back to Menu</button>
+    </div>
+
+    <div id="option2Page" class="page">
+        <h2>Option 2</h2>
+        <p>Content for option 2...</p>
+        <button onclick="returnToMenu()">Back to Menu</button>
+    </div>
+
+    <div id="option3Page" class="page">
+        <h2>Option 3</h2>
+        <p>Content for option 3...</p>
+        <button onclick="returnToMenu()">Back to Menu</button>
+    </div>
+
+    <div id="finalPage" class="page">
+        <h2>Congratulations! You've unlocked the final page!</h2>
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>

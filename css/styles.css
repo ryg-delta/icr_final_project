@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.page {
+    display: none; /* Hide all pages by default */
+    text-align: center;
+}
+
+.page.active {
+    display: block; /* Only active pages are shown */
+}
+
+.hidden {
+    display: none;
+}
