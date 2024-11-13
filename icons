@@ -1,0 +1,14 @@
+    const icons = [
+        './svg_icons/capsule-svgrepo-com.svg',
+        './svg_icons/clinic-building-svgrepo-com.svg',
+        './svg_icons/cry-1-svgrepo-com.svg',
+        './svg_icons/healthcare-hospital-medical-50-svgrepo-com.svg',
+        './svg_icons/infusion-svgrepo-com.svg',
+        './svg_icons/inject-svgrepo-com.svg',
+        './svg_icons/injuried-svgrepo-com.svg',
+        './svg_icons/medicine-bottle-svgrepo-com.svg',
+        './svg_icons/microscope-svgrepo-com.svg',
+        './svg_icons/female-organ-reproduction-svgrepo-com.svg',
+        './svg_icons/woman-svgrepo-com.svg',
+        './svg_icons/woman-with-chest-pain-svgrepo-com.svg'
+    ];

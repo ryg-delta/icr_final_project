@@ -1,21 +1,162 @@
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+  font-family: Garamond, serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden; /* Prevents overflow from animated background */
+  position: relative;
+  background-color: #f7cbcb;
 }
 
 .page {
-    display: none; /* Hide all pages by default */
-    text-align: center;
+  display: none; /* Hide all pages by default */
+  text-align: center;
+  max-width: 600px; /* Set a max-width for centered content */
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
 }
 
 .page.active {
-    display: block; /* Only active pages are shown */
+  display: block; /* Only active pages are shown */
 }
 
 .hidden {
-    display: none;
+  display: none !important;
 }
+
+
+#menuPage {
+  position: relative;
+}
+
+#fullScreenBackgroundPage {
+  position: fixed; /* Covers the viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+
+.blob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the blob */
+  width: 800px;
+  height: 800px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+.blob2 {
+  position: absolute;
+  top: 50%; /* Position relative to the first blob */
+  left: 50%; /* Adjust as needed for placement */
+  transform: translate(-100%, 10%);
+  width: 1500px; /* Different size for visual variety */
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+.blobscene {
+  top: 50%; /* Position relative to the first blob */
+  left: 50%; /* Adjust as needed for placement */
+  transform: translate(-100%, 10%);
+  position: absolute;
+  width: 1500px;
+  height: 1500px;
+}
+
+
+.falling-icon {
+  position: absolute;
+  top: -10%;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: fall 5s linear forwards; /* Change to 'forwards' to retain the end position */
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+
+
+#animatedPage {
+  position: relative;
+  overflow: hidden; /* Allows icons to fall over entire background */
+  width: 100vw;
+  height: 100vh;
+}
+
+.background-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+
+.icon-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full width of viewport */
+  height: 100vh; /* Full height of viewport */
+  pointer-events: none;
+}
+
+
+.falling-icon.faded {
+  opacity: 0;
+}
+
+@keyframes fall {
+  to {
+      transform: translateY(100vh);
+  }
+}
+
+#proceedButton {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  font-size: 1.5rem;
+  z-index: 10; /* Ensure it appears over the falling icons */
+}
+
+
+#fallingIconsContainer {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fading-icon {
+  transition: opacity 0.5s ease; /* Adjust transition duration as needed */
+}
+
+.fading-icon.hidden {
+  opacity: 0;
+}
+
+
