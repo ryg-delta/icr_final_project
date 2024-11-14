@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Initialize Matter.js components
     const Engine = Matter.Engine,
-          Render = Matter.Render,
-          World = Matter.World,
-          Bodies = Matter.Bodies,
-          Mouse = Matter.Mouse,
-          MouseConstraint = Matter.MouseConstraint;
+    Render = Matter.Render,
+    World = Matter.World,
+    Bodies = Matter.Bodies,
+    Mouse = Matter.Mouse,
+    MouseConstraint = Matter.MouseConstraint,
+    Runner = Matter.Runner;
 
-    // Create the physics engine and renderer
+    // Create the physics engine, renderer, and runner
     const engine = Engine.create();
     engine.gravity.y = 0.5; // Set gravity strength
-    
 
     const render = Render.create({
         element: document.getElementById("fallingIconsContainer"),
@@ -23,16 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    Render.run(render);
-
-    // Confirm canvas element exists and log it
-    console.log("Render Canvas:", render.canvas);
-
-    // Try adding event listener after the canvas is created and rendered
-    render.canvas.addEventListener("mousedown", () => {
-        console.log("Mouse down event detected on render canvas");
-    });
-    
+    const runner = Runner.create(); // Create the runner
 
     // Create boundaries: ground, left wall, right wall
     const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight + 25, window.innerWidth + 50, 50, { isStatic: true });
@@ -44,24 +35,57 @@ document.addEventListener("DOMContentLoaded", () => {
     const landingPage = document.getElementById("landingPage");
     const animatedPage = document.getElementById("animatedPage");
     const menuPage = document.getElementById("menuPage");
+    const finalPage = document.getElementById("finalPage");
     const finalPageButton = document.getElementById("finalPageButton");
 
-    const subPages = ["option1", "option2", "option3"];
-    let visitedPages = JSON.parse(localStorage.getItem("visitedPages")) || {
-        option1: false,
-        option2: false,
-        option3: false
-    };
-
-    // Check if all subpages have been visited
-    const allVisited = () => subPages.every(page => visitedPages[page]);
-
-    // Show a specific page
+    let visitCount = 0;
+    
+    // Function to update the visibility of the finalPageButton
+    function updateFinalPageButtonVisibility() {
+        if (visitCount >= 3) {
+            finalPageButton.classList.remove("hidden");
+        } else {
+            finalPageButton.classList.add("hidden");
+        }
+    }
+    
+    // Show the specified page
     function showPage(page) {
         document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
         page.classList.add("active");
     }
+    
 
+    const blobs = {
+        option1: document.querySelector('.blob2'),
+        option2: document.querySelector('.blob3'),
+        option3: document.querySelector('.blob4')
+    };
+    // Function to handle button click
+    window.changeBlobOpacity = function(option) {
+        blobs[option].style.opacity = '0.8'; // Set the blob to full opacity
+    };
+
+    // Navigation function
+    window.navigateTo = function(option) {
+        showPage(document.getElementById(`${option}Page`));
+        visitCount++;
+        changeBlobOpacity(option);
+        updateFinalPageButtonVisibility(); // Update button visibility after navigating
+    };
+
+
+    
+    // Initial check on page load
+    updateFinalPageButtonVisibility();
+    
+    window.returnToMenu = function() {
+        showPage(menuPage);
+    }
+
+    window.navToLast = function(){
+        showPage(finalPage);
+    }
 
     
     const icons = [
@@ -81,9 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let iconsStoppedFalling = false; // Flag to indicate when icons stop falling
 
-    render.canvas.addEventListener("mousedown", () => {
-        console.log("Mouse down event detected on canvas");
-    });
     function startFallingIcons() {
         const maxIcons = 100;
         let iconCount = 0;
@@ -100,10 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
             createIcon(Math.random() * window.innerWidth, 0, iconPath);
 
             iconCount++;
-        }, 300); // Adjust interval for falling speed
+        }, 200); // Adjust interval for falling speed
 
         // Start Matter.js engine and renderer
-        Engine.run(engine);
+        Runner.run(runner, engine);
         Render.run(render);
     }
 
@@ -121,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         World.add(engine.world, icon);
     }
 
-    // PROBLEM CHILD VVVV
+
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
@@ -135,44 +156,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     
 
-    // Handle icon removal when clicked
-    Matter.Events.on(mouseConstraint, "click", (event) => {
-        console.log("Mouse event triggered");
+    // Adjust the event to mouseup for improved click detection
+    Matter.Events.on(mouseConstraint, "mousemove", (event) => {
         if (iconsStoppedFalling) {
-            console.log("Entered");
             const mousePosition = event.mouse.position;
             const allBodies = Matter.Composite.allBodies(engine.world);
-            // Log the mouse position
-            console.log("Mouse Position:", mousePosition);
-            // Detect if the mouse is clicking on an icon
-            allBodies.forEach(body => {
-                console.log("Body Label:", body.label, "Body Bounds:", body.bounds);
 
-            // Adjust bounds to increase click detection accuracy
-            const adjustedBounds = {
-                min: {
-                    x: body.bounds.min.x - 5,
-                    y: body.bounds.min.y - 5
-                },
-                max: {
-                    x: body.bounds.max.x + 5,
-                    y: body.bounds.max.y + 5
-                }
-            };
-                if (body.label === 'icon' && Matter.Bounds.contains(body.bounds, mousePosition)) {
-                    World.remove(engine.world, body); // Remove icon immediately
-                    console.log("Icon removed at position:", mousePosition); // Log icon removal position
-                    checkTextUncovered(); // Check if text is uncovered
+            // Check for icons under the mouse position
+            allBodies.forEach(body => {
+                const adjustedBounds = {
+                    min: {
+                        x: body.bounds.min.x - 5,
+                        y: body.bounds.min.y - 5
+                    },
+                    max: {
+                        x: body.bounds.max.x + 5,
+                        y: body.bounds.max.y + 5
+                    }
+                };
+                
+                if (body.label === 'icon' && Matter.Bounds.contains(adjustedBounds, mousePosition)) {
+                    World.remove(engine.world, body);
+                    console.log("Icon removed at position:", mousePosition); // Confirm removal
+                    checkTextUncovered(); // Check if text is now uncovered
                 }
             });
         }
     });
 
+
     // Define a hidden rectangle sensor
-    const hiddenRectangle = Bodies.rectangle(window.innerWidth / 2, window.innerHeight / 2, 200, 50, {
+    const hiddenRectangle = Bodies.rectangle(window.innerWidth / 2, window.innerHeight / 2, 500, 200, {
         isSensor: true,
         isStatic: true,
-        label: 'hiddenRectangle'
+        label: 'hiddenRectangle',
+        render: {
+            visible: false // Set to false to make it invisible
+        }
     });
     World.add(engine.world, hiddenRectangle);
 
@@ -196,10 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
             checkTextUncovered();
         }
     });
+ 
 
-    //PROBLEM CHILD ^^^^^    
-
-   
     function transitionToAnimatedPage() {
         showPage(animatedPage);
         startFallingIcons();
@@ -213,16 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("proceedButton").addEventListener("click", () => showPage(menuPage));
 
-    window.navigateTo = function(option) {
-        showPage(document.getElementById(`${option}Page`));
-        visitedPages[option] = true;
-        localStorage.setItem("visitedPages", JSON.stringify(visitedPages));
-        if (allVisited()) finalPageButton.classList.remove("hidden");
-    };
-
-    window.returnToMenu = function() { showPage(menuPage); }
-
-    if (allVisited()) finalPageButton.classList.remove("hidden");
 
     // Adjust render size on window resize
     window.addEventListener("resize", () => {
@@ -232,4 +240,5 @@ document.addEventListener("DOMContentLoaded", () => {
         Matter.Body.setPosition(leftWall, { x: -50, y: window.innerHeight / 2 });
         Matter.Body.setPosition(rightWall, { x: window.innerWidth + 50, y: window.innerHeight / 2 });
     });
+
 });

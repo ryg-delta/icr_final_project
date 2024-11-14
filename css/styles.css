@@ -27,9 +27,29 @@ body {
   display: none !important;
 }
 
-
 #menuPage {
-  position: relative;
+  height: 100vh;
+  position: absolute;
+}
+
+.button1 {
+    top: 40%; /* Position within blob2 */
+    left: -10%;
+}
+
+.button2 {
+    top: 40%; /* Position within blob3 */
+    right: -50%;
+}
+
+.button3 {
+    bottom: -70%; /* Position within blob4 */
+    left: -10%;
+}
+
+.final {
+  top: 50%;
+  left: -20%;
 }
 
 #fullScreenBackgroundPage {
@@ -38,7 +58,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: -2;
 }
 
 
@@ -47,8 +67,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* Center the blob */
-  width: 800px;
-  height: 800px;
+  width: 900px;
+  height: 900px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -57,24 +77,46 @@ body {
 
 .blob2 {
   position: absolute;
-  top: 50%; /* Position relative to the first blob */
-  left: 50%; /* Adjust as needed for placement */
-  transform: translate(-100%, 10%);
-  width: 1500px; /* Different size for visual variety */
-  height: 200px;
+  top: 10%;
+  left: -30%;
+  width: 700px;
+  height: 700px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: -1;
+  opacity: 0.7;
+  transition: opacity 0.3s ease; /* Smooth transition on opacity change */
 }
 
-.blobscene {
-  top: 50%; /* Position relative to the first blob */
-  left: 50%; /* Adjust as needed for placement */
-  transform: translate(-100%, 10%);
+.blob3 {
   position: absolute;
-  width: 1500px;
-  height: 1500px;
+  top: 30%;
+  left: 0%;
+ 
+  width: 700px;
+  height: 700px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  opacity: 0.7;
+  transition: opacity 0.3s ease; /* Smooth transition on opacity change */
+}
+
+.blob4 {
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  
+  width: 700px;
+  height: 700px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  opacity: 0.7;
+  transition: opacity 0.3s ease; /* Smooth transition on opacity change */
 }
 
 
@@ -89,9 +131,8 @@ body {
   pointer-events: auto;
   opacity: 1;
   transition: opacity 0.5s;
+  z-index: 10;
 }
-
-
 
 #animatedPage {
   position: relative;
@@ -109,7 +150,6 @@ body {
   opacity: 0.5;
 }
 
-
 .icon-container {
   position: absolute;
   top: 0;
@@ -118,7 +158,6 @@ body {
   height: 100vh; /* Full height of viewport */
   pointer-events: none;
 }
-
 
 .falling-icon.faded {
   opacity: 0;
@@ -140,7 +179,6 @@ body {
   z-index: 10; /* Ensure it appears over the falling icons */
 }
 
-
 #fallingIconsContainer {
   width: 100vw;
   height: 100vh;
@@ -151,12 +189,28 @@ body {
   overflow: hidden;
 }
 
-.fading-icon {
-  transition: opacity 0.5s ease; /* Adjust transition duration as needed */
+
+canvas {
+  pointer-events: auto;
 }
 
-.fading-icon.hidden {
-  opacity: 0;
+.button-text {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 10px 20px; /* Adjust padding as needed */
+  position: relative;
+  display: inline-block;
 }
 
-
+.button-text::before {
+  content: '';
+  position: absolute;
+  top: -10px; /* Adjust for larger click area */
+  bottom: -10px;
+  left: -20px;
+  right: -20px;
+  background-color: transparent; /* Invisible hit area */
+}
