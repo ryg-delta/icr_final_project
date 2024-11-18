@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Page elements
     const landingPage = document.getElementById("landingPage");
+    const secondPage = document.getElementById("secondPage");
     const animatedPage = document.getElementById("animatedPage");
     const menuPage = document.getElementById("menuPage");
     const finalPage = document.getElementById("finalPage");
@@ -218,18 +219,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
  
 
-    function transitionToAnimatedPage() {
+    function transitionToPage() {
         showPage(animatedPage);
         startFallingIcons();
-        document.removeEventListener("click", transitionToAnimatedPage);
-        document.removeEventListener("keydown", transitionToAnimatedPage);
+        document.removeEventListener("click", transitionToPage);
+        document.removeEventListener("keydown", transitionToPage);
     }
      // Start falling icons on the animated page
-    document.addEventListener("click", transitionToAnimatedPage);
-    document.addEventListener("keydown", transitionToAnimatedPage);
+    document.addEventListener("click", transitionToPage);
+    document.addEventListener("keydown", transitionToPage);
 
 
-    document.getElementById("proceedButton").addEventListener("click", () => showPage(menuPage));
+    document.getElementById("proceedButton").addEventListener("click", () => showPage(secondPage));
+
 
 
     // Adjust render size on window resize
