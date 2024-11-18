@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
-    
     // Initial check on page load
     updateFinalPageButtonVisibility();
     
@@ -219,18 +218,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
  
 
-    function transitionToPage() {
-        showPage(animatedPage);
-        startFallingIcons();
-        document.removeEventListener("click", transitionToPage);
-        document.removeEventListener("keydown", transitionToPage);
-    }
-     // Start falling icons on the animated page
+    let currentState = "landing"; // Possible states: landing, animated, second, menu
+
     document.addEventListener("click", transitionToPage);
     document.addEventListener("keydown", transitionToPage);
 
+    function transitionToPage() {
+        
+        if (currentState === "landing") {
+            currentState = "animated";
+            showPage(animatedPage);
+            startFallingIcons();
+            document.removeEventListener("click", transitionToPage);
+            document.removeEventListener("keydown", transitionToPage);
+    
+            // Add proceed button click handler for transitioning to the second page
+            document.getElementById("proceedButton").addEventListener("click", transitionToSecondPage);
+        }
+    }
 
-    document.getElementById("proceedButton").addEventListener("click", () => showPage(secondPage));
+    function transitionToSecondPage() {
+        if (currentState === "second") {
+            console.log("transitionToSecondPage called.");
+    
+            setTimeout(() => {
+                console.log("Listeners for menu transition added.");
+                document.addEventListener("click", transitionToMenu);
+                document.addEventListener("keydown", transitionToMenu);
+            }, 100); 
+        }
+    }
+    
+    function transitionToMenu() {
+        if (currentState === "second") {
+            currentState = "menu";
+            showPage(menuPage);
+            console.log("Transitioned to menu page. Removing listeners.");
+            // Clean up menu transition listeners
+            document.removeEventListener("click", transitionToMenu);
+            document.removeEventListener("keydown", transitionToMenu);
+        }
+    }
+    
+    // Landing page -> Animated page
+
+    document.getElementById("proceedButton").addEventListener("click", () => {
+        if (currentState === "animated") {
+            currentState = "second";
+            console.log("Current state is 'animated'. Transitioning to second page.");
+            showPage(secondPage);
+        }
+    });
 
 
 
