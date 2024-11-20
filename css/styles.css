@@ -1,5 +1,5 @@
 body {
-  font-family: Garamond, serif;
+  font-family: Lucida, monospace;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,15 +20,25 @@ body {
   border-radius: 8px;
 }
 
-.waveBackground {
+.waveContainer {
   position: fixed;
-  height: 100%; /* Full-page height */
-  width: 100%;
-  background: url('layered-waves-haikei(1).svg');
-  background-size: cover;
-  background-repeat: no-repeat; /* Prevents tiling */
-  background-position: center; /* Centers the background image */
-  z-index: -1;
+  top: 0;
+  left: 0%;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent scrolling */
+  z-index: -1; /* Keep the background behind other content */
+  transform: translateX(0%);
+  transform: translateY(0%);
+}
+
+
+
+.waveContainer svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the SVG scales to fill the container */
 }
 
 
@@ -45,20 +55,6 @@ body {
   position: absolute;
 }
 
-.button1 {
-    top: 40%; /* Position within blob2 */
-    left: -10%;
-}
-
-.button2 {
-    top: 40%; /* Position within blob3 */
-    right: -50%;
-}
-
-.button3 {
-    bottom: -70%; /* Position within blob4 */
-    left: -10%;
-}
 
 .final {
   top: 50%;
@@ -206,6 +202,11 @@ body {
   cursor: pointer; 
 }
 
+#back2menu{
+  position: absolute;
+  font-size: 16pt;
+}
+
 #fallingIconsContainer {
   width: 100vw;
   height: 100vh;
@@ -229,6 +230,7 @@ canvas {
   padding: 10px 20px; /* Adjust padding as needed */
   position: relative;
   display: inline-block;
+  font-size: 18pt;
 }
 
 .button-text::before {
@@ -239,4 +241,40 @@ canvas {
   left: -20px;
   right: -20px;
   background-color: transparent; /* Invisible hit area */
+}
+
+.button-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#solutionButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24pt;
+}
+
+#culturalButton {
+  position: absolute;
+  top: calc(50% - 150px); /* Adjust vertical offset */
+  left: calc(50% - 270px); /* Adjust horizontal offset */
+}
+
+#systemicButton {
+  position: absolute;
+  top: calc(50% + 180px); /* Adjust vertical offset */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#institutionalButton {
+  position: absolute;
+  top: calc(50% - 150px); /* Adjust vertical offset */
+  left: calc(50% + 150px); /* Adjust horizontal offset */
 }
