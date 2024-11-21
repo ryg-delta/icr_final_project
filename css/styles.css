@@ -32,15 +32,12 @@ body {
   transform: translateY(0%);
 }
 
-
-
 .waveContainer svg {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: contain; /* Ensures the SVG scales to fill the container */
 }
-
 
 .page.active {
   display: block; /* Only active pages are shown */
@@ -55,7 +52,6 @@ body {
   position: absolute;
 }
 
-
 .final {
   top: 50%;
   left: -20%;
@@ -69,7 +65,6 @@ body {
   height: 100vh;
   z-index: -2;
 }
-
 
 .blob {
   position: absolute;
@@ -128,7 +123,6 @@ body {
   transition: opacity 0.3s ease; /* Smooth transition on opacity change */
 }
 
-
 .falling-icon {
   position: absolute;
   top: -10%;
@@ -168,7 +162,6 @@ body {
 }
 
 
-
 .icon-container {
   position: absolute;
   top: 0;
@@ -178,7 +171,6 @@ body {
   pointer-events: none;
 }
 
-
 @keyframes fall {
   to {
       transform: translateY(100vh);
@@ -187,7 +179,7 @@ body {
 
 #proceedButton {
   position: absolute;
-  bottom: 300px;
+  bottom: 200px;
   left: 50%;
   transform: translateX(-50%);
   display: block;
@@ -202,10 +194,6 @@ body {
   cursor: pointer; 
 }
 
-#back2menu{
-  position: absolute;
-  font-size: 16pt;
-}
 
 #fallingIconsContainer {
   width: 100vw;
@@ -258,6 +246,7 @@ canvas {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 24pt;
+
 }
 
 #culturalButton {
@@ -278,3 +267,75 @@ canvas {
   top: calc(50% - 150px); /* Adjust vertical offset */
   left: calc(50% + 150px); /* Adjust horizontal offset */
 }
+
+.circle-text {
+  display: flex; /* Align items horizontally and vertically */
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  width: 550px; /* Adjust the size of the circle */
+  height: 500px; /* Adjust the size of the circle */
+  border-radius: 50%; /* Makes the shape a circle */
+  color: rgb(0, 0, 0); /* Text color */
+  font-size: 14px; /* Adjust text size */
+  font-weight: bold; /* Make the text bold */
+  text-align: center; /* Center text alignment */
+  margin: 20px auto; /* Add spacing and center on page */
+  position: absolute;
+}
+
+/* Add specific colors for different circles */
+.circle-text.red {
+  background-color: rgb(172, 71, 91);
+  top: -40%; /* Position relative to the viewport height */
+  left: 100%; /* Position relative to the viewport width */
+  transform: translate(0%, 0%); 
+  z-index: 0;
+}
+
+.circle-text.blue {
+  background-color: rgb(177, 95, 126);
+  top: -190%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center on the page */
+}
+
+.circle-text.green {
+  background-color: rgb(204, 111, 176);
+  bottom: -250%;
+  right: 90%;
+}
+
+.source-list {
+  text-align: left;
+  margin: 20px auto;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-y: auto;
+  display: block;
+  visibility: visible;
+}
+
+.source-list ul {
+  list-style: none; /* Remove default bullets */
+  padding: 0;
+  margin: 0;
+}
+
+
+.source-list li {
+  text-indent: -20px; /* Negative indentation */
+  margin-left: 20px; /* Indent the whole block */
+  line-height: 1.6; /* Adjust line spacing */
+}
+
+.source-list a {
+  color: #8d2745;
+  text-decoration: underline;
+}
+
+.source-list a:hover {
+  color: #ff5a5f;
+}
+
+
+
