@@ -294,14 +294,14 @@ canvas {
 
 .circle-text.blue {
   background-color: rgb(177, 95, 126);
-  top: -190%;
+  top: -120%;
   left: 50%;
   transform: translate(-50%, -50%); /* Center on the page */
 }
 
 .circle-text.green {
   background-color: rgb(204, 111, 176);
-  bottom: -250%;
+  bottom: -200%;
   right: 90%;
 }
 
