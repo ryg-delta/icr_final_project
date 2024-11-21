@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const animatedPage = document.getElementById("animatedPage");
     const menuPage = document.getElementById("menuPage");
     const finalPage = document.getElementById("finalPage");
-    const finalPageButton = document.getElementById("finalPageButton");
+    const finalPageButton = document.getElementById("solutionButton");
+    const sourcePage = document.getElementById("sourcesPage");
 
     let visitCount = 0;
     
@@ -269,6 +270,16 @@ document.addEventListener("DOMContentLoaded", () => {
             showPage(secondPage);
         }
     });
+
+
+
+    // Add function to navigate to sources
+    window.navigateToSources = function () {
+        document.querySelectorAll(".page").forEach((page) => page.classList.remove("active"));
+        document.getElementById("sourcesPage").classList.add("active");
+        sourcesPage.scrollTop = 0; // Reset scroll position to the top
+    };
+    
 
 
 
